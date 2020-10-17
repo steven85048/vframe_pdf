@@ -1,24 +1,31 @@
-import numpy as np
+import pafy
 import cv2
-print(cv2.__version__)
 
 IMAGE_IN = 'test-video.mp4'
 IMAGE_OUT = 'test_frames/'
 
-def extract_image_frames(path_in, path_out):
+test_youtube_vid = 'https://www.youtube.com/watch?v=DNMO-MdmO6g&ab_channel=HiroshiNakamura'
+
+def vidcap_from_youtube(youtube_url):
+    video = pafy.new(youtube_url)
+    print(video.title)
+    stream = video.getbest()
+    return cv2.VideoCapture(stream.url)
+
+def extract_image_frames(vidcap, path_in, path_out):
     count = 1
 
-    vidcap = cv2.VideoCapture(path_in)
     success,image = vidcap.read()
     success = True
 
-    print(vidcap.isOpened())
-
     while success:
-        vidcap.set(cv2.CAP_PROP_POS_MSEC, (count * 1000))
+        vidcap.set(cv2.CAP_PROP_POS_MSEC, (count * 10000))
+
         success,image = vidcap.read()
-        print('Read frame {}'.format(count))
-        cv2.imwrite(path_out + 'frame{}.jpg'.format(count), image)
+        if(success):
+            cv2.imwrite(path_out + 'frame{}.jpg'.format(count), image)
+
         count = count + 1
 
-extract_image_frames(IMAGE_IN, IMAGE_OUT)
+vc = vidcap_from_youtube(test_youtube_vid)
+extract_image_frames(vc, IMAGE_IN, IMAGE_OUT)
