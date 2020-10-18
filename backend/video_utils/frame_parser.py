@@ -1,7 +1,7 @@
 import pafy
 import cv2
 
-FRAME_CAPTURE_INTERVAL = 1000 # in ms
+FRAME_CAPTURE_INTERVAL = 10000 # in ms
 
 def extract_frames_from_youtube(youtube_url, path_out):
     vc = _vidcap_from_youtube(youtube_url)

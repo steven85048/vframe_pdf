@@ -1,11 +1,10 @@
 import React from 'react';
+import VideoEditor from './VideoEditor/VideoEditor';
 
-function App() {
+export default function App() {
   return (
     <div>
-
+      <VideoEditor />
     </div>
   );
 }
-
-export default App;
